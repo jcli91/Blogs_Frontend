@@ -31,6 +31,7 @@ function App() {
     title: "",
     body: ""
   }
+  const [targetBlog, setTargetBlog] = useState(nullBlog);
 
   // FUNCTIONS
   const getBlogs = async () => {
@@ -51,6 +52,30 @@ function App() {
     getBlogs()
   }
 
+  const getTargetBlog = (blog) => {
+    setTargetBlog(blog)
+    navigate("/edit")
+  }
+
+  const updateBlog = async (blog) => {
+    await fetch(url + blog.id, {
+      method: "put",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(blog),
+    });
+    getBlogs();
+  }
+
+  const deleteBlog = async (blog) => {
+    await fetch(url + blog.id, {
+      method: "delete"
+    })
+    getBlogs()
+    navigate("/")
+  }
+
 
 
   // useEffects
@@ -67,13 +92,21 @@ function App() {
       <Link to="/new"><button style={button}>Create New Blog</button></Link>
       <Routes>
         <Route path="/" element={<AllBlogs blogs={blogs} />} />
-        <Route path="/blog/:id" element={<SingleBlog blogs={blogs} />} />
+        <Route path="/blog/:id" element={<SingleBlog
+         blogs={blogs}
+         edit={getTargetBlog}
+         deleteBlog={deleteBlog}
+         />} />
         <Route path="/new" element={<Form
           initialBlog={nullBlog}
           handleSubmit={addBlogs}
           buttonLabel="Add New Blog"
         />} />
-        <Route path="/edit" element={<Form />} />
+        <Route path="/edit" element={<Form
+        initialBlog={targetBlog}
+        handleSubmit={updateBlog}
+        buttonLabel="Update Blog"
+        />} />
       </Routes>
     </div>
   );
