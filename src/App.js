@@ -93,19 +93,19 @@ function App() {
       <Routes>
         <Route path="/" element={<AllBlogs blogs={blogs} />} />
         <Route path="/blog/:id" element={<SingleBlog
-         blogs={blogs}
-         edit={getTargetBlog}
-         deleteBlog={deleteBlog}
-         />} />
+          blogs={blogs}
+          edit={getTargetBlog}
+          deleteBlog={deleteBlog}
+        />} />
         <Route path="/new" element={<Form
           initialBlog={nullBlog}
           handleSubmit={addBlogs}
           buttonLabel="Add New Blog"
         />} />
         <Route path="/edit" element={<Form
-        initialBlog={targetBlog}
-        handleSubmit={updateBlog}
-        buttonLabel="Update Blog"
+          initialBlog={targetBlog}
+          handleSubmit={updateBlog}
+          buttonLabel="Update Blog"
         />} />
       </Routes>
     </div>
